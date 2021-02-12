@@ -1,9 +1,11 @@
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import javax.swing.*;
 import java.lang.Number;
+import java.io.File;
 
 /**
  * 
@@ -12,7 +14,19 @@ import java.lang.Number;
  */
 public class FilesInOut {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        File inputFile = new File("input.txt");
+
+        if(args[0].equals("this"))
+        {
+            System.out.println(update1(test));
+        }
+        if(args[1].equals("is"))
+        {
+            System.out.println(update2(test));
+        }
+
         // Replace this with statements to set the file name (input) and file name (output).
         // Initially it will be easier to hardcode suitable file names.
 
@@ -30,5 +44,78 @@ public class FilesInOut {
         System.out.println("You need to add your own code to do anything");
 
     } // main
+
+    public void updateFile(File inputFile, File outputFile)
+    {
+        try (Scanner sc = new Scanner(inputFile, StandardCharsets.UTF_8.name()))
+        {
+            while(sc.hasNextLine())
+            {
+                System.out.println(sc.nextLine());
+            }
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();;
+        }
+    }
+
+    public static String updateString1(String input)
+    {
+        String update = "";
+        StringBuffer change = new StringBuffer(input);
+
+        for(int i = 0; i < input.length(); i ++)
+        {
+
+            if (tryParseInt(change.substring(i)))
+            {
+                update = update + input.substring(i, i+2) + "/" + input.substring(i+3 , i+5) + "/" + input.substring(i+4);
+                change.replace(i, input.length(), update);
+                break;
+            }
+            else
+            {
+                if( i == 0 || Character.isWhitespace(change.charAt((i-1))))
+                {
+                    char temp = Character.toUpperCase(change.charAt(i));
+                    change.replace(i, i+1, Character.toString(temp));
+                }
+            }
+        }
+        return change.toString();
+    }
+
+    public static String updateString2(String input)
+    {
+        String update = "";
+
+        StringBuffer change = new StringBuffer(input);
+
+        for(int i = 0; i < input.length(); i ++)
+        {
+            if (tryParseInt(change.substring(i)))
+            {
+                update = update + input.substring(i, i+2) + "/" + input.substring(i+3 , i+5) + "/" + input.substring(i+4);
+                change.replace(i, input.length(), update);
+                break;
+            }
+        }
+
+        return change.toString().toUpperCase();
+    }
+
+    public static boolean tryParseInt(String intChar)
+    {
+        try
+        {
+            Integer.parseInt(intChar);
+            return true;
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+    }
 
 } // FilesInOut
