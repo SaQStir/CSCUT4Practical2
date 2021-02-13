@@ -14,17 +14,24 @@ import java.io.File;
  */
 public class FilesInOut {
 
+    //int scenario tells us to output in all caps or not
+    public static boolean scenario = false;
+
+
     public static void main(String[] args)
     {
-        File inputFile = new File("input.txt");
 
-        if(args[0].equals("this"))
+        String test = "allison wesley 28011990";
+        System.out.println(updateString(test));
+
+        String fileIn = "input.txt";
+        String fileOut = "output.txt";
+
+        updateFile(fileIn, fileOut);
+
+        if (args[0].equals("~u"))
         {
-            System.out.println(update1(test));
-        }
-        if(args[1].equals("is"))
-        {
-            System.out.println(update2(test));
+            scenario = true;
         }
 
         // Replace this with statements to set the file name (input) and file name (output).
@@ -45,13 +52,14 @@ public class FilesInOut {
 
     } // main
 
-    public void updateFile(File inputFile, File outputFile)
+    public static void updateFile(String inputLoc, String outputLoc)
     {
+        File inputFile = new File(inputLoc);
         try (Scanner sc = new Scanner(inputFile, StandardCharsets.UTF_8.name()))
         {
             while(sc.hasNextLine())
             {
-                System.out.println(sc.nextLine());
+                updateFiledWrite(outputLoc,sc.next());
             }
         }
         catch(IOException e)
@@ -59,8 +67,21 @@ public class FilesInOut {
             e.printStackTrace();;
         }
     }
+    public static void updateFiledWrite(String outputloc, String input)
+    {
+        File outputFile = new File(outputloc);
+        try (FileWriter fw = new FileWriter(outputFile, true))
+        {
+            fw.write(updateString(input) + "\r\n");
+            fw.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();;
+        }
+    }
 
-    public static String updateString1(String input)
+    public static String updateString(String input)
     {
         String update = "";
         StringBuffer change = new StringBuffer(input);
@@ -83,26 +104,12 @@ public class FilesInOut {
                 }
             }
         }
-        return change.toString();
-    }
-
-    public static String updateString2(String input)
-    {
-        String update = "";
-
-        StringBuffer change = new StringBuffer(input);
-
-        for(int i = 0; i < input.length(); i ++)
+        if (!scenario)
         {
-            if (tryParseInt(change.substring(i)))
-            {
-                update = update + input.substring(i, i+2) + "/" + input.substring(i+3 , i+5) + "/" + input.substring(i+4);
-                change.replace(i, input.length(), update);
-                break;
-            }
+            return change.toString().toUpperCase();
         }
-
-        return change.toString().toUpperCase();
+        else
+            return change.toString();
     }
 
     public static boolean tryParseInt(String intChar)
