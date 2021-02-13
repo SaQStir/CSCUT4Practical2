@@ -31,7 +31,7 @@ public class FilesInOut {
         do
             {
                 String input = sc.nextLine();
-                if(checkInputFile(input))
+                if(checkFile(input))
                 {
                     fileIn = input;
                     scenario = true;
@@ -49,7 +49,7 @@ public class FilesInOut {
         do
             {
             String input = sc.nextLine();
-            if(checkOutputFile(input))
+            if(checkFile(input))
             {
                 fileOut = input;
                 scenario = true;
@@ -72,7 +72,7 @@ public class FilesInOut {
     }
     // main
 
-    public static Boolean checkInputFile(String inputFileName)
+    public static Boolean checkFile(String inputFileName)
     {
         try
         {
@@ -87,21 +87,6 @@ public class FilesInOut {
         return true;
     }
     //checkInputFile
-
-    public static Boolean checkOutputFile(String outputFileName)
-    {
-        try
-        {
-            File outputFile = new File(outputFileName);
-            Scanner outFile = new Scanner (outputFile);
-        }
-        catch (IOException e)
-        {
-            System.err.println("IOException: " + e.getMessage() + "not found");
-            return false;
-        }
-        return true;
-    }
 
     public static void updateFile(String inputLoc, String outputLoc)
     {
