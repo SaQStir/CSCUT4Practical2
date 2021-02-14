@@ -127,15 +127,25 @@ public class FilesInOut {
     {
         String update = "";
         StringBuffer change = new StringBuffer(input);
+        boolean m = false;
 
         for(int i = 0; i < input.length(); i ++)
         {
             //To format date
             if (tryParseInt(change.substring(i)))
             {
-                update = update + input.substring(i, i+2) + "/" + input.substring(i+3 , i+5) + "/" + input.substring(i+4);
-                change.replace(i, input.length(), update);
-                break;
+                if (m)
+                {
+                    update =  input.substring(i-1, i+1) + "/" + input.substring(i+2 , i+4) + "/" + input.substring(i+3, input.length());
+                    change.replace(i, input.length()+1, update);
+                    break;
+                }
+                else
+                 {
+                    update = input.substring(i, i + 2) + "/" + input.substring(i + 3, i + 5) + "/" + input.substring(i + 4);
+                    change.replace(i, input.length(), update);
+                    break;
+                }
             }
             //to upper case
             else
@@ -144,11 +154,15 @@ public class FilesInOut {
                 {
                     if(Character.isWhitespace(change.charAt((i+1))))
                     {
-                        update = input.charAt(i) + ".";
+                        update = Character.toUpperCase(input.charAt(i)) + ".";
                         change.replace(i, i+1, update);
+                        m = true;
                     }
-                    char temp = Character.toUpperCase(change.charAt(i));
-                    change.replace(i, i+1, Character.toString(temp));
+                    else
+                    {
+                        char temp = Character.toUpperCase(change.charAt(i));
+                        change.replace(i, i + 1, Character.toString(temp));
+                    }
                 }
             }
         }
