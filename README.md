@@ -1,5 +1,7 @@
 # CSCUT4Practical2
-The starter code for practical exercise 2
+/Please use the following type of format in the command line 
+java FinlesInOut (optional flag) (inputFile) (ExisitingOutputFile) thank you verry much :D
 
-This project is not specific to any IDE nor dependency management.  
-It is just the bare .java file and some test csv files. You are free to use any IDE of your choice.
+p.s was unsure of why intellij  
+keeps adding new files and such
+
